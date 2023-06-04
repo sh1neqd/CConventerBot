@@ -39,13 +39,17 @@ public class TelegramBot extends TelegramLongPollingBot {
     static final String USD50_BUTTON = "50USD_BUTTON";
     static final String ELSE_BUTTON = "ELSE_BUTTON";
     static final String SQL_FOR_PRICE = "SELECT value FROM price WHERE id=1";
+    static final String HELP_MESSAGE = "Доступные на данный момент команды:\n\n /exchange - переводит ваше количество валюты в рубли\n" +
+            "/todaysrate - показывает сегодняшний курс доллара\n/help - список команд\n\nКонтакт для предложений - @dakonxd";
 
 
     public TelegramBot(BotConfig config) {
         this.config = config;
         List<BotCommand> listOfCommands = new ArrayList<>();
-        listOfCommands.add(new BotCommand("/start", "starting the bot"));
+        listOfCommands.add(new BotCommand("/start", "Перезапуск бота"));
         listOfCommands.add(new BotCommand("/exchange","Перевод долларов в рубли"));
+        listOfCommands.add(new BotCommand("/help","Список доступных команд"));
+        listOfCommands.add(new BotCommand("/todaysrate","Курс доллара на сегодня"));
         try{
             this.execute(new SetMyCommands(listOfCommands, new BotCommandScopeDefault(), null));
         } catch (TelegramApiException e) {
@@ -80,6 +84,12 @@ public class TelegramBot extends TelegramLongPollingBot {
                         break;
                     case "/exchange":
                         getUserAmount(chatId);
+                        break;
+                    case "/todaysrate":
+                        sendTodayCurrency(chatId);
+                        break;
+                    case "/help":
+                        sendMessage(chatId, HELP_MESSAGE);
                         break;
                     default:
                         if(getUserStatus(chatId)==0){
@@ -159,7 +169,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     @Scheduled(fixedDelay = 86400000)
-    private void getDailyExchange() throws IOException {
+    private void getDailyExchange() {
         converterService.getUsdToRub();
     }
 
@@ -237,9 +247,9 @@ public class TelegramBot extends TelegramLongPollingBot {
         return user;
     }
 
-    private void getTodayCurrency(Long chatId) {
+    private void sendTodayCurrency(Long chatId) {
         var price = jdbcTemplate.queryForObject(SQL_FOR_PRICE, Double.class);
-        sendMessage(chatId, "Курс доллара на сегодня: " + price + " рублей \n\n" +"Для конвертации вашего значения валюты" +
+        sendMessage(chatId, "Курс доллара на сегодня: " + price + " рублей \n\n" +"Для конвертации вашего значения валюты " +
                 "введите /exchange");
     }
 
