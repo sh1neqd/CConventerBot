@@ -15,6 +15,8 @@ If for some reason you want to try run it by yourself or develop it any futher, 
 5. Paste all in application.properties file:
 
 ![image](https://github.com/sh1neqd/CConventerBot/assets/75639041/23012aa3-02b7-47f7-b804-cb8a5176536b)
+
+
 6. Enjoy :)
 
 Also, for better understanding, make sure to check libriries used: https://github.com/rubenlagus/TelegramBots 
