@@ -19,7 +19,6 @@ import ru.dakon.CConventerBot.Model.User;
 import ru.dakon.CConventerBot.Model.UserRepository;
 import ru.dakon.CConventerBot.config.BotConfig;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
