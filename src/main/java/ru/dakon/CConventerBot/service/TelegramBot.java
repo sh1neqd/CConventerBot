@@ -3,7 +3,6 @@ package ru.dakon.CConventerBot.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
@@ -167,10 +166,6 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     }
 
-    @Scheduled(fixedDelay = 86400000)
-    private void getDailyExchange() {
-        converterService.getUsdToRub();
-    }
 
     private void sendUserExchange(long chatId, Integer amount) {
         var price = jdbcTemplate.queryForObject(SQL_FOR_PRICE, Double.class);

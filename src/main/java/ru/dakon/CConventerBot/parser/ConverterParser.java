@@ -37,7 +37,7 @@ public class ConverterParser implements Parser{
 
                 }
             }
-            log.info("this is from parser, value is " + value); // for delete
+            log.info("todays price is  " + value); // for delete
             return value;
         } catch (Exception e) {
             log.error("xml parsing error, xml:{}", priceAsString, e);
